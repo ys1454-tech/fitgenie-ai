@@ -1,0 +1,23 @@
+# FitGenie AI — Backend Dependencies
+# Install with: pip install -r requirements.txt
+#
+# NOTE: These versions are chosen to have pre-built wheels for Python 3.13.
+# No C++ / Rust compiler required.
+
+# Web framework
+fastapi>=0.115.0
+
+# ASGI server to run FastAPI
+uvicorn[standard]>=0.31.0
+
+# Google GenAI SDK — used to call Google Gemini API
+google-genai>=1.0.0
+
+# Environment variable loader
+python-dotenv>=1.0.1
+
+# Data validation — 2.9+ ships pre-built wheels for Python 3.13
+pydantic>=2.9.0
+
+# ORM for SQLite database (Stage 2)
+sqlalchemy>=2.0.0

@@ -19,6 +19,7 @@ PLAN_MODIFICATION_USER_PROMPT = """### USER PROFILE & PERMANENT CONSTRAINTS
 - Equipment: {equipment}
 - Dietary Preference: {food_preference}
 - Dietary Restrictions: {food_restrictions}
+- Current Day Reference: {current_day} (if user mentions 'today' or 'tomorrow', map accordingly)
 
 ### EXISTING 7-DAY PLAN
 ```json
@@ -75,6 +76,7 @@ def build_plan_modification_prompt(
     user_request: str,
     existing_plan: dict | str,
     profile: dict,
+    current_day: str | None = None,
 ) -> dict:
     """
     Build the system and user prompts for conversational plan modification.
@@ -83,6 +85,7 @@ def build_plan_modification_prompt(
         user_request: The user's conversational modification message.
         existing_plan: The current plan as a dict or JSON string.
         profile: The user profile dictionary.
+        current_day: Optional current day of the week (e.g. Sunday) to resolve 'today'.
 
     Returns:
         dict with 'system' and 'user' prompt strings.
@@ -99,6 +102,7 @@ def build_plan_modification_prompt(
         equipment=profile.get("equipment") or "Bodyweight",
         food_preference=profile.get("food_preference") or "Standard",
         food_restrictions=profile.get("food_restrictions") or "None",
+        current_day=current_day or "Not specified",
         existing_plan_json=plan_str,
         user_request=user_request.strip(),
     )

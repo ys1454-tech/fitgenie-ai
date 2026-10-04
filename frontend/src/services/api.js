@@ -72,8 +72,6 @@ export const generatePlan = async (userInput) => {
   return response.data;
 };
 
-// ─── Plan Modification (Stage 6) ──────────────────────────────────────────
-
 /**
  * Send a conversational modification request for an existing plan.
  *
@@ -81,12 +79,31 @@ export const generatePlan = async (userInput) => {
  *
  * @param {string} planId      - ID of the plan to modify
  * @param {string} userRequest - The user's modification request (e.g. "Make Wednesday's workout only 20 minutes.")
+ * @param {string|null} currentDay - Optional day of week (e.g. "Sunday") to resolve 'today'
  * @returns {Promise<{session_id: string, plan_id: string, profile: object, plan: object}>}
  */
-export const modifyPlan = async (planId, userRequest) => {
-  const response = await apiClient.post(`/api/plans/${planId}/modify`, {
-    user_request: userRequest,
-  });
+export const modifyPlan = async (planId, userRequest, currentDay = null) => {
+  const payload = { user_request: userRequest };
+  if (currentDay) {
+    payload.current_day = currentDay;
+  }
+  const response = await apiClient.post(`/api/plans/${planId}/modify`, payload);
+  return response.data;
+};
+
+// ─── Real-Time AI Coach Chat (Stage 7 Fix) ───────────────────────────────
+
+/**
+ * Ask the real-time aware FitGenie AI Coach an informational or diet/workout question.
+ * Uses current date/time context and existing plan without modifying or persisting anything.
+ *
+ * Calls POST /api/coach/chat
+ *
+ * @param {object} payload - { user_request, current_date, current_day, current_time, today_plan, tomorrow_plan, profile }
+ * @returns {Promise<{message: string}>}
+ */
+export const askCoach = async (payload) => {
+  const response = await apiClient.post("/api/coach/chat", payload);
   return response.data;
 };
 

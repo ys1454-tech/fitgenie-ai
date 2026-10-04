@@ -16,6 +16,7 @@ from database.db import init_db
 from api.routes.health import router as health_router
 from api.routes.sessions import router as sessions_router
 from api.routes.plans import router as plans_router
+from api.routes.coach import router as coach_router
 from api.routes.gemini import router as gemini_router
 from api.routes.bedrock import router as bedrock_router
 
@@ -74,6 +75,9 @@ app.include_router(gemini_router, prefix="/api")
 
 # Plan generation workflow (Stage 4)
 app.include_router(plans_router, prefix="/api")
+
+# Real-time AI Coach chat (Stage 7)
+app.include_router(coach_router, prefix="/api")
 
 # Legacy LLM routes (backward compatibility)
 app.include_router(bedrock_router, prefix="/api")

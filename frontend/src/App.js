@@ -1,6 +1,6 @@
 /**
  * App.js — Root component for FitGenie AI.
- * Defines the application-wide routing and shared layout (header).
+ * Defines the application layout, navigation bar, and routing.
  */
 
 import React from "react";
@@ -9,41 +9,54 @@ import "./App.css";
 
 import HomePage from "./pages/HomePage";
 
-// Future pages — imported here when created in later stages
-// import ProfilePage from "./pages/ProfilePage";
-// import PlanPage    from "./pages/PlanPage";
-
 function App() {
   return (
     <Router>
-      {/* ── Global Navigation Bar ─────────────────────────────── */}
-      <header className="navbar">
-        <Link to="/" className="navbar-brand">
-          💪 FitGenie AI
-        </Link>
-        <nav className="navbar-links">
-          <Link to="/">Home</Link>
-          {/* Profile and Plan links will be added in Stage 5 */}
-        </nav>
-      </header>
+      <div className="app-container">
+        {/* ── Global Top Navigation Bar ─────────────────────────────── */}
+        <header className="navbar">
+          <div className="navbar-container">
+            <Link to="/" className="navbar-brand">
+              <span className="brand-icon">⚡</span>
+              <span className="brand-text">FitGenie <span className="brand-accent">AI</span></span>
+            </Link>
 
-      {/* ── Page Content ─────────────────────────────────────── */}
-      <main className="main-content">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          {/* Routes for later stages: */}
-          {/* <Route path="/profile" element={<ProfilePage />} /> */}
-          {/* <Route path="/plan"    element={<PlanPage />}    /> */}
-        </Routes>
-      </main>
+            <nav className="navbar-links">
+              <a href="#dashboard" className="nav-item">Dashboard</a>
+              <a href="#workout" className="nav-item">Today's Workout</a>
+              <a href="#schedule" className="nav-item">Weekly Schedule</a>
+              <a href="#nutrition" className="nav-item">Nutrition</a>
+              <a href="#ai-coach" className="nav-item nav-item-coach">💬 AI Coach</a>
+            </nav>
 
-      {/* ── Global Footer ─────────────────────────────────────── */}
-      <footer className="footer">
-        <p>
-          FitGenie AI &copy; 2026 — Applied Generative AI Project &nbsp;|&nbsp;
-          For educational purposes only.
-        </p>
-      </footer>
+            <div className="navbar-profile">
+              <div className="profile-indicator">
+                <span className="profile-avatar">👤</span>
+                <span className="profile-status-dot"></span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        {/* ── Page Content ─────────────────────────────────────── */}
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        </main>
+
+        {/* ── Global Footer ─────────────────────────────────────── */}
+        <footer className="footer">
+          <div className="footer-container">
+            <p>
+              ⚡ <strong>FitGenie AI</strong> &copy; 2026 — Personalized Fitness &amp; Nutrition System Powered by Generative AI.
+            </p>
+            <p className="footer-sub">
+              Demonstration &amp; Educational Project &nbsp;|&nbsp; Built with Google Gemini &amp; FastAPI.
+            </p>
+          </div>
+        </footer>
+      </div>
     </Router>
   );
 }

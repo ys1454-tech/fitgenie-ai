@@ -2,8 +2,10 @@
 plans.py — API routes for 7-day fitness and nutrition plan generation and modification.
 
 Endpoints:
-  POST /api/plans/generate    — End-to-end plan generation from natural language input.
-  POST /api/plans/{id}/modify — Conversational modification of an existing generated plan.
+  POST /api/plans/generate        — End-to-end plan generation from natural language input.
+  POST /api/plans/{id}/modify     — Conversational modification of an existing generated plan.
+  POST /api/plans/{id}/coach      — Real-time aware AI Coach: answers informational questions
+                                    using current date/time context without modifying the plan.
 """
 
 import json
@@ -54,6 +56,11 @@ class PlanModifyRequest(BaseModel):
         ...,
         description="Natural language request detailing the desired modifications to the existing plan.",
         examples=["Make Wednesday's workout only 20 minutes."],
+    )
+    current_day: str | None = Field(
+        default=None,
+        description="Current day of the week to resolve relative references like 'today'.",
+        examples=["Sunday"],
     )
 
 
@@ -275,6 +282,7 @@ def modify_plan(
         user_request=user_request,
         existing_plan=existing_plan_data,
         profile=profile_dict,
+        current_day=body.current_day,
     )
 
     # 6. Invoke Gemini

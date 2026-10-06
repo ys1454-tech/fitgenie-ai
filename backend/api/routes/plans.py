@@ -14,6 +14,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
+from nlp.pipeline import analyze_text
+
 from database.crud import (
     create_user_session,
     get_plan_by_id,
@@ -69,6 +71,7 @@ class PlanGenerateResponse(BaseModel):
     plan_id: str
     profile: dict
     plan: dict
+    nlp_analysis: dict | None = None
 
 
 # ── Routes ─────────────────────────────────────────────────────────────────
@@ -94,6 +97,25 @@ def generate_plan(
       7. Returns session_id, plan_id, profile, and plan
     """
     user_input = body.user_input.strip() if body.user_input else ""
+
+        # ---------------------------------------------------------
+    # NLP PREPROCESSING
+    # ---------------------------------------------------------
+    try:
+        nlp_analysis = analyze_text(user_input)
+        logger.info("NLP analysis: %s", nlp_analysis)
+    except Exception as exc:
+        logger.error("NLP analysis failed: %s", exc)
+
+        # NLP should not break the main GenAI workflow.
+        nlp_analysis = {
+            "intent": "UNKNOWN",
+            "intent_confidence": 0.0,
+            "tokens": [],
+            "keywords": [],
+            "entities": {},
+        }
+
     if not user_input:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -101,7 +123,10 @@ def generate_plan(
         )
 
     # Step 2: Build profile extraction prompt
-    profile_prompts = build_profile_extraction_prompt(user_input)
+    profile_prompts = build_profile_extraction_prompt(
+    user_input,
+    nlp_analysis
+)
 
     # Step 3 & 4: Call Gemini and parse profile
     try:
@@ -204,6 +229,7 @@ def generate_plan(
         plan_id=plan_record.id,
         profile=validated_profile,
         plan=validated_plan,
+        nlp_analysis=nlp_analysis,
     )
 
 

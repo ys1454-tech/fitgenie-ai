@@ -20,6 +20,7 @@ from api.routes.coach import router as coach_router
 from api.routes.gemini import router as gemini_router
 from api.routes.bedrock import router as bedrock_router
 
+from api.routes.nlp import router as nlp_router
 
 # ---------------------------------------------------------------------------
 # Lifespan — runs setup on startup and teardown on shutdown
@@ -55,7 +56,7 @@ app = FastAPI(
 # ---------------------------------------------------------------------------
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[settings.FRONTEND_ORIGIN],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -81,6 +82,8 @@ app.include_router(coach_router, prefix="/api")
 
 # Legacy LLM routes (backward compatibility)
 app.include_router(bedrock_router, prefix="/api")
+
+app.include_router(nlp_router, prefix="/api")
 
 # Future routes will be added here in later stages:
 # app.include_router(substitutions_router,  prefix="/api")

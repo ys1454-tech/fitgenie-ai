@@ -21,3 +21,8 @@ pydantic>=2.9.0
 
 # ORM for SQLite database (Stage 2)
 sqlalchemy>=2.0.0
+
+
+spacy>=3.8.0
+scikit-learn>=1.5.0
+joblib>=1.4.0

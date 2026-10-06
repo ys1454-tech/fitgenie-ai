@@ -7,8 +7,8 @@
 
 import axios from "axios";
 
-// Base URL loaded from .env — defaults to localhost:8000 in development
-const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+// Use the React dev-server proxy by default; set REACT_APP_API_URL to override.
+const API_BASE_URL = process.env.REACT_APP_API_URL || "";
 
 // Axios instance with shared configuration
 // Timeout is 90 seconds — Gemini plan generation/modification can take 20-40 seconds

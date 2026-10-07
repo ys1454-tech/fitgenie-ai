@@ -79,7 +79,8 @@ venv\Scripts\activate
 # On macOS/Linux:
 source venv/bin/activate
 
-# 3. Install dependencies
+# 3. Install CPU-only PyTorch, then the backend dependencies
+pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 
 # 4. Create your .env file from the template
@@ -91,6 +92,8 @@ copy .env.example .env        # Windows
 # 6. Start the backend server
 uvicorn main:app --reload --port 8000
 ```
+
+The first NLP request downloads the `all-MiniLM-L6-v2` Transformer model from Hugging Face (about 90 MB). It is cached locally for subsequent runs. The local Transformer handles intent classification; Gemini remains responsible for profile extraction and plan generation.
 
 The backend will be available at: **http://localhost:8000**
 

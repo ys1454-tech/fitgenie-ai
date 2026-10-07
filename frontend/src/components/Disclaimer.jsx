@@ -9,7 +9,7 @@ function Disclaimer() {
   return (
     <div className="disclaimer">
       <p>
-        ⚕️ <strong>Medical Disclaimer:</strong> FitGenie AI generates plans for
+        <strong>Medical Disclaimer:</strong> FitGenie AI generates plans for
         general wellness and educational purposes only. Always consult a qualified
         healthcare provider, doctor, or certified fitness professional before
         starting any new exercise or nutrition program.

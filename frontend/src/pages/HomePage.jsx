@@ -239,7 +239,7 @@ function HomePage() {
           {
             id: 1,
             role: "assistant",
-            text: `👋 Hi! Your personalized 7-day fitness and nutrition plan is active. Today is ${rt.currentDay}. Ask me what to eat now, what today's workout is, or request any adjustments!`,
+            text: `Hi! Your personalized 7-day fitness and nutrition plan is active. Today is ${rt.currentDay}. Ask me what to eat now, what today's workout is, or request any adjustments!`,
             time: "Just now",
           },
         ]);
@@ -280,7 +280,7 @@ function HomePage() {
         {
           id: Date.now(),
           role: "assistant",
-          text: `👋 Welcome! Your personalized 7-day plan "${data.plan?.plan_title || "Fitness & Nutrition"}" is ready. Today is ${rt.currentDay}. Tell me what changes you'd like to make or ask what to eat now!`,
+          text: `Welcome! Your personalized 7-day plan "${data.plan?.plan_title || "Fitness & Nutrition"}" is ready. Today is ${rt.currentDay}. Tell me what changes you'd like to make or ask what to eat now!`,
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         },
       ]);
@@ -362,7 +362,7 @@ function HomePage() {
         const errorAssistantMsg = {
           id: Date.now() + 1,
           role: "assistant",
-          text: `⚠️ Sorry, I encountered an issue updating your plan: ${detail}`,
+          text: `Sorry, I encountered an issue updating your plan: ${detail}`,
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           isError: true,
         };
@@ -405,7 +405,7 @@ function HomePage() {
         const errorAssistantMsg = {
           id: Date.now() + 1,
           role: "assistant",
-          text: `⚠️ ${detail}`,
+          text: detail,
           time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
           isError: true,
         };
@@ -449,10 +449,10 @@ function HomePage() {
         <section className="welcome-setup-card">
           <div className="setup-hero">
             <div className="hero-badge">
-              <span className="badge-sparkle">✨</span> Generative AI Fitness &amp; Nutrition
+              Generative AI Fitness &amp; Nutrition
             </div>
             <h1 className="hero-main-title">
-              Craft Your Personalized <span className="gradient-text">Fitness Routine</span>
+              Your AI-Powered <span className="gradient-text">Fitness &amp; Nutrition Coach</span>
             </h1>
             <p className="hero-desc">
               Describe your goals, schedule, equipment, dietary preferences, and budget in natural language.
@@ -462,14 +462,14 @@ function HomePage() {
             {/* Backend Connectivity Badge */}
             <div className="status-badge-container">
               {backendStatus === "checking" && (
-                <span className="badge badge-checking">⏳ Connecting to backend…</span>
+                <span className="badge badge-checking">Connecting to backend…</span>
               )}
               {backendStatus === "online" && (
-                <span className="badge badge-online">✅ Backend Online • FastAPI &amp; Gemini</span>
+                <span className="badge badge-online">Backend Online • FastAPI &amp; Gemini</span>
               )}
               {backendStatus === "offline" && (
                 <span className="badge badge-offline">
-                  ⚠️ Backend offline — start FastAPI server on port 8000
+                  Backend offline — start FastAPI server on port 8000
                 </span>
               )}
             </div>
@@ -492,6 +492,9 @@ function HomePage() {
                 }}
                 disabled={loading}
               />
+              <p style={{ color: "#94a3b8", fontSize: "0.8rem", marginTop: "0.5rem" }}>
+                Local Transformer: <strong>sentence-transformers/all-MiniLM-L6-v2</strong> for intent classification. Gemini generates your profile and plan.
+              </p>
             </div>
 
             <div className="form-buttons-row">
@@ -505,7 +508,7 @@ function HomePage() {
                     <span className="spinner-sm"></span> Generating Your Plan…
                   </span>
                 ) : (
-                  <span>⚡ Generate My Plan</span>
+                  <span>Generate My Plan</span>
                 )}
               </button>
 
@@ -534,7 +537,6 @@ function HomePage() {
           {/* Error Banner */}
           {error && (
             <div className="error-card" role="alert">
-              <span className="error-symbol">⚠️</span>
               <p>{error}</p>
             </div>
           )}
@@ -549,9 +551,10 @@ function HomePage() {
             <div className="hero-greeting-row">
               <div>
                 <span className="hero-subheading">Personalized Fitness Dashboard</span>
-                <h1 className="hero-greeting">{getGreeting()} 👋</h1>
+                <h1 className="hero-greeting">{getGreeting()}</h1>
                 <p className="hero-status-tagline">
-                  Your personalized <strong>{result.plan.plan_title || "7-Day Program"}</strong> is active and ready.
+                  Let&apos;s keep your <strong>{result.profile?.fitness_goal || "fitness"}</strong> journey moving.
+                  {" "}Your personalized <strong>{result.plan.plan_title || "7-Day Program"}</strong> is ready.
                 </p>
               </div>
 
@@ -562,7 +565,7 @@ function HomePage() {
                   onClick={handleReset}
                   title="Start over with a new profile"
                 >
-                  🔄 New Plan
+                  New Plan
                 </button>
               </div>
             </div>
@@ -614,46 +617,52 @@ function HomePage() {
             <section className="dashboard-card" style={{ marginBottom: "2rem" }}>
               <div className="card-top-bar" style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.07)", paddingBottom: "1rem", marginBottom: "1.5rem" }}>
                 <div>
-                  <span className="badge-highlight">DIAGNOSTICS</span>
-                  <h2 className="workout-main-title">🧠 NLP Analysis</h2>
-                  <p style={{ color: "#94a3b8", fontSize: "0.9rem", marginTop: "0.25rem" }}>How FitGenie processed your natural language request.</p>
+                  <span className="badge-highlight">✦ AI POWERED · LOCAL TRANSFORMER MODEL</span>
+                  <h2 className="workout-main-title">Transformer NLP Analysis</h2>
+                  <p style={{ color: "#111827", fontSize: "0.9rem", marginTop: "0.25rem" }}>
+                    Creates text embeddings for intent classification. Gemini handles profile extraction and plan generation.
+                  </p>
+                  <div style={{ display: "inline-flex", flexWrap: "wrap", alignItems: "center", gap: "0.5rem", background: "rgba(16, 185, 129, 0.12)", border: "1px solid rgba(16, 185, 129, 0.35)", borderRadius: "6px", padding: "0.55rem 0.75rem", marginTop: "0.75rem" }}>
+                    <strong style={{ color: "#111827", fontSize: "0.9rem" }}>MODEL</strong>
+                    <span style={{ color: "#111827", fontSize: "0.9rem" }}>sentence-transformers/all-MiniLM-L6-v2</span>
+                  </div>
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
                 <div>
-                  <h3 className="sub-heading" style={{ color: "#94a3b8", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Detected Intent</h3>
+                  <h3 className="sub-heading" style={{ color: "#111827", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Detected Intent</h3>
                   <div style={{ display: "inline-flex", alignItems: "center", background: "#1e293b", padding: "0.6rem 1rem", borderRadius: "8px", border: "1px solid rgba(255, 255, 255, 0.07)", marginBottom: "1.5rem" }}>
-                    <strong style={{ fontSize: "1.05rem", color: "#f8fafc" }}>{result.nlp_analysis.intent || "UNKNOWN"}</strong>
+                    <strong style={{ fontSize: "1.05rem", color: "#111827" }}>{result.nlp_analysis.intent || "UNKNOWN"}</strong>
                     <span style={{ marginLeft: "0.75rem", fontSize: "0.85rem", color: "#10b981", background: "rgba(16, 185, 129, 0.15)", padding: "0.2rem 0.6rem", borderRadius: "4px" }}>
                       {((result.nlp_analysis.intent_confidence || 0) * 100).toFixed(1)}% Confidence
                     </span>
                   </div>
                   
-                  <h3 className="sub-heading" style={{ color: "#94a3b8", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Extracted Keywords</h3>
+                  <h3 className="sub-heading" style={{ color: "#111827", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Extracted Keywords</h3>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
                     {(result.nlp_analysis.keywords || []).map((kw, i) => (
-                      <span key={i} style={{ background: "rgba(255,255,255,0.05)", padding: "0.3rem 0.75rem", borderRadius: "6px", fontSize: "0.9rem", color: "#cbd5e1" }}>
+                      <span key={i} style={{ background: "rgba(255,255,255,0.05)", padding: "0.3rem 0.75rem", borderRadius: "6px", fontSize: "0.9rem", color: "#111827" }}>
                         {kw}
                       </span>
                     ))}
                     {(!result.nlp_analysis.keywords || result.nlp_analysis.keywords.length === 0) && (
-                      <span style={{ color: "#64748b", fontSize: "0.9rem" }}>No keywords extracted.</span>
+                      <span style={{ color: "#111827", fontSize: "0.9rem" }}>No keywords extracted.</span>
                     )}
                   </div>
                 </div>
                 
                 <div>
-                  <h3 className="sub-heading" style={{ color: "#94a3b8", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Detected Entities</h3>
+                  <h3 className="sub-heading" style={{ color: "#111827", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Detected Entities</h3>
                   {result.nlp_analysis.entities && Object.keys(result.nlp_analysis.entities).length > 0 ? (
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem" }}>
                       {Object.entries(result.nlp_analysis.entities).map(([key, vals]) => {
                         const formattedKey = key.split('_').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ');
                         return (
                           <div key={key} style={{ background: "rgba(255, 255, 255, 0.03)", padding: "0.6rem 0.8rem", borderRadius: "8px", border: "1px solid rgba(255, 255, 255, 0.05)" }}>
-                            <div style={{ fontSize: "0.75rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "0.25rem" }}>
+                            <div style={{ fontSize: "0.75rem", color: "#111827", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "0.25rem" }}>
                               {formattedKey}
                             </div>
-                            <div style={{ fontSize: "0.95rem", color: "#f1f5f9", fontWeight: "500" }}>
+                            <div style={{ fontSize: "0.95rem", color: "#111827", fontWeight: "500" }}>
                               {Array.isArray(vals) ? vals.join(", ") : vals}
                             </div>
                           </div>
@@ -661,7 +670,7 @@ function HomePage() {
                       })}
                     </div>
                   ) : (
-                    <span style={{ color: "#64748b", fontSize: "0.9rem" }}>No entities detected.</span>
+                    <span style={{ color: "#111827", fontSize: "0.9rem" }}>No entities detected.</span>
                   )}
                 </div>
               </div>
@@ -676,7 +685,7 @@ function HomePage() {
           <section className="weekly-schedule-section" id="schedule">
             <div className="section-header-row">
               <div>
-                <h2 className="section-heading">🗓️ Weekly Workout Schedule</h2>
+                <h2 className="section-heading">Weekly Workout Schedule</h2>
                 <p className="section-caption">Click on any day to inspect its full exercise and nutrition breakdown.</p>
               </div>
               {result.plan.modification_summary && (
@@ -695,15 +704,17 @@ function HomePage() {
                     key={day.day_number || idx}
                     type="button"
                     className={`schedule-day-card ${isSelected ? "schedule-day-card-active" : ""}`}
+                    aria-pressed={isSelected}
+                    aria-label={`${day.day_name}, ${day.workout?.title || "Workout Session"}`}
                     onClick={() => setSelectedDayIndex(idx)}
                   >
                     <div className="day-card-top">
                       <span className="day-tag">Day {day.day_number || idx + 1}</span>
                       <span className="day-time-pill">{duration}m</span>
                     </div>
-                    <h3 className="day-title">{day.day_name}</h3>
+                    <h3 className="day-title">{day.day_name?.slice(0, 3).toUpperCase() || "DAY"}</h3>
                     <p className="day-workout-name">{day.workout?.title || "Workout Session"}</p>
-                    <div className="day-focus-pill">🎯 {day.workout?.focus_area || "General Fitness"}</div>
+                    <div className="day-focus-pill">{day.workout?.focus_area || "General Fitness"}</div>
                   </button>
                 );
               })}
@@ -722,11 +733,11 @@ function HomePage() {
                       <span className="badge-highlight">
                         SELECTED DAY • DAY {currentDay.day_number} ({currentDay.day_name})
                       </span>
-                      <h2 className="workout-main-title">🏋️ {currentDay.workout?.title || "Workout Routine"}</h2>
+                      <h2 className="workout-main-title">{currentDay.workout?.title || "Workout Routine"}</h2>
                     </div>
                     <div className="workout-meta-pills">
-                      <span className="pill-metric">⏱️ {currentDay.workout?.duration_minutes || 30} mins</span>
-                      <span className="pill-metric">🎯 {currentDay.workout?.focus_area || "Full Body"}</span>
+                      <span className="pill-metric">{currentDay.workout?.duration_minutes || 30} mins</span>
+                      <span className="pill-metric">{currentDay.workout?.focus_area || "Full Body"}</span>
                     </div>
                   </div>
 
@@ -742,7 +753,7 @@ function HomePage() {
                               <div>
                                 <h4 className="ex-title">{ex.name}</h4>
                                 {ex.instructions && (
-                                  <p className="ex-cue">💡 {ex.instructions}</p>
+                                  <p className="ex-cue">{ex.instructions}</p>
                                 )}
                               </div>
                             </div>
@@ -766,7 +777,6 @@ function HomePage() {
                   {/* Daily Coaching Cue */}
                   {currentDay.daily_notes && (
                     <div className="coaching-notes-box">
-                      <span className="notes-icon">💡</span>
                       <div>
                         <strong>Coaching Cue &amp; Notes:</strong>
                         <p>{currentDay.daily_notes}</p>
@@ -782,11 +792,11 @@ function HomePage() {
                   <div className="card-top-bar">
                     <div>
                       <span className="badge-highlight">NUTRITION BLUEPRINT</span>
-                      <h2 className="workout-main-title">🥗 Meals for {currentDay.day_name}</h2>
+                      <h2 className="workout-main-title">Meals for {currentDay.day_name}</h2>
                     </div>
                     {currentDay.nutrition.daily_calories_target && (
                       <span className="pill-calorie">
-                        🔥 Target: <strong>{currentDay.nutrition.daily_calories_target}</strong>
+                        Target: <strong>{currentDay.nutrition.daily_calories_target}</strong>
                       </span>
                     )}
                   </div>
@@ -795,7 +805,6 @@ function HomePage() {
                     {currentDay.nutrition.breakfast && (
                       <div className="meal-box">
                         <div className="meal-box-header">
-                          <span className="meal-icon">🌅</span>
                           <h4>Breakfast</h4>
                         </div>
                         <p className="meal-text">{currentDay.nutrition.breakfast}</p>
@@ -805,7 +814,6 @@ function HomePage() {
                     {currentDay.nutrition.lunch && (
                       <div className="meal-box">
                         <div className="meal-box-header">
-                          <span className="meal-icon">☀️</span>
                           <h4>Lunch</h4>
                         </div>
                         <p className="meal-text">{currentDay.nutrition.lunch}</p>
@@ -815,7 +823,6 @@ function HomePage() {
                     {currentDay.nutrition.dinner && (
                       <div className="meal-box">
                         <div className="meal-box-header">
-                          <span className="meal-icon">🌙</span>
                           <h4>Dinner</h4>
                         </div>
                         <p className="meal-text">{currentDay.nutrition.dinner}</p>
@@ -825,7 +832,6 @@ function HomePage() {
                     {currentDay.nutrition.snack && (
                       <div className="meal-box">
                         <div className="meal-box-header">
-                          <span className="meal-icon">🍎</span>
                           <h4>Snack / Shake</h4>
                         </div>
                         <p className="meal-text">{currentDay.nutrition.snack}</p>
@@ -841,7 +847,7 @@ function HomePage() {
               <div className="coach-panel-card">
                 <div className="coach-header">
                   <div className="coach-identity">
-                    <div className="coach-avatar">⚡</div>
+                    <div className="coach-avatar">FG</div>
                     <div>
                       <h3 className="coach-name">FitGenie AI Coach</h3>
                       <span className="coach-status">
@@ -863,7 +869,7 @@ function HomePage() {
                       key={msg.id}
                       className={`chat-bubble-row ${msg.role === "user" ? "bubble-row-user" : "bubble-row-assistant"}`}
                     >
-                      {msg.role === "assistant" && <div className="chat-avatar-mini">⚡</div>}
+                      {msg.role === "assistant" && <div className="chat-avatar-mini">FG</div>}
                       <div className={`chat-bubble ${msg.role === "user" ? "bubble-user" : "bubble-assistant"} ${msg.isError ? "bubble-error" : ""}`}>
                         <div className="bubble-author">
                           {msg.role === "assistant" ? "FitGenie" : "You"}
@@ -871,14 +877,14 @@ function HomePage() {
                         </div>
                         <div className="bubble-text">{msg.text}</div>
                       </div>
-                      {msg.role === "user" && <div className="chat-avatar-mini user-avatar-mini">👤</div>}
+                      {msg.role === "user" && <div className="chat-avatar-mini user-avatar-mini">You</div>}
                     </div>
                   ))}
 
                   {/* Typing / Loading Indicator in Chat */}
                   {chatLoading && (
                     <div className="chat-bubble-row bubble-row-assistant">
-                      <div className="chat-avatar-mini">⚡</div>
+                      <div className="chat-avatar-mini">FG</div>
                       <div className="chat-bubble bubble-assistant bubble-typing">
                         <div className="typing-dots">
                           <span></span>
@@ -895,7 +901,7 @@ function HomePage() {
 
                 {/* Quick Action Chips */}
                 <div className="quick-actions-wrapper">
-                  <span className="quick-label">💬 Ask Coach:</span>
+                  <span className="quick-label">Ask Coach:</span>
                   <div className="quick-buttons-row">
                     <button
                       type="button"
@@ -903,7 +909,7 @@ function HomePage() {
                       disabled={chatLoading}
                       onClick={() => executeChatMessage("What should I eat now?", false)}
                     >
-                      🥗 What to eat now?
+                      What to eat now?
                     </button>
                     <button
                       type="button"
@@ -911,7 +917,7 @@ function HomePage() {
                       disabled={chatLoading}
                       onClick={() => executeChatMessage("What is my workout today?", false)}
                     >
-                      🏋️ Today's workout?
+                      Today's workout?
                     </button>
                     <button
                       type="button"
@@ -919,13 +925,13 @@ function HomePage() {
                       disabled={chatLoading}
                       onClick={() => executeChatMessage("What am I eating tomorrow?", false)}
                     >
-                      🌅 Tomorrow's meals?
+                      Tomorrow's meals?
                     </button>
                   </div>
                 </div>
 
                 <div className="quick-actions-wrapper" style={{ marginTop: "0.25rem" }}>
-                  <span className="quick-label">⚡ Quick Adjustments:</span>
+                  <span className="quick-label">Quick Adjustments:</span>
                   <div className="quick-buttons-row">
                     <button
                       type="button"
@@ -988,12 +994,12 @@ function HomePage() {
                 {/* Chat Feedback Banners */}
                 {chatSuccess && (
                   <div className="chat-feedback chat-feedback-success">
-                    ✅ {chatSuccess}
+                    {chatSuccess}
                   </div>
                 )}
                 {chatError && (
                   <div className="chat-feedback chat-feedback-error">
-                    ⚠️ {chatError}
+                    {chatError}
                   </div>
                 )}
               </div>

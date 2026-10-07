@@ -17,10 +17,26 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   background-color: #070a13;
-  color: #f1f5f9;
+  color: #111827;
   line-height: 1.6;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+}
+
+.navbar-brand,
+.hero-main-title,
+.hero-subtitle,
+.section-heading,
+.profile-summary,
+.plan-card,
+.workout-card,
+.meal-card,
+.chat-message,
+.chat-bubble,
+.result-text,
+.card-text,
+.text-primary {
+  color: #111827;
 }
 
 a {
@@ -1241,4 +1257,948 @@ a:hover {
   font-size: 0.78rem;
   color: #475569;
   margin-top: 0.35rem;
+}
+
+/* ── Premium light UI refresh ──────────────────────────────── */
+:root {
+  color-scheme: light;
+  --fg-ink: #17211b;
+  --fg-muted: #69756d;
+  --fg-green: #28834c;
+  --fg-green-dark: #1f6b3d;
+  --fg-lime: #d8f36a;
+  --fg-border: #e5ebe6;
+  --fg-surface: #ffffff;
+  --fg-canvas: #f5f8f5;
+  --fg-shadow: 0 12px 34px rgba(22, 44, 29, 0.07);
+}
+
+body {
+  background: var(--fg-canvas);
+  color: var(--fg-ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+a {
+  color: var(--fg-green);
+}
+
+a:hover {
+  color: var(--fg-green-dark);
+}
+
+.app-container {
+  background:
+    radial-gradient(ellipse at 4% 0%, rgba(216, 243, 106, 0.11), transparent 30rem),
+    var(--fg-canvas);
+}
+
+.main-content {
+  max-width: 1440px;
+  padding: 2rem 2rem 3.5rem;
+}
+
+.navbar {
+  padding: 0.85rem 2rem;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--fg-border);
+  box-shadow: 0 3px 14px rgba(22, 44, 29, 0.035);
+  backdrop-filter: blur(12px);
+}
+
+.navbar-container {
+  max-width: 1440px;
+  gap: 1.25rem;
+}
+
+.navbar-brand {
+  color: var(--fg-ink);
+  font-size: 1.22rem;
+  letter-spacing: -0.045em;
+}
+
+.brand-icon {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--fg-lime);
+  color: #31511d;
+  filter: none;
+  font-size: 1.05rem;
+}
+
+.brand-accent {
+  background: none;
+  color: var(--fg-green);
+  -webkit-text-fill-color: currentColor;
+}
+
+.navbar-links {
+  gap: 0.35rem;
+}
+
+.nav-item {
+  color: #59665e;
+  padding: 0.55rem 0.72rem;
+  border-radius: 9px;
+  font-size: 0.86rem;
+}
+
+.nav-item:hover {
+  background: #f1f5f1;
+  color: var(--fg-ink);
+}
+
+.nav-item-coach,
+.nav-item-coach:hover {
+  background: #f1f8e6;
+  color: var(--fg-green-dark);
+  border: 1px solid #e1edc8;
+}
+
+.profile-indicator {
+  background: #e9f1e8;
+  border-color: #dce8dc;
+}
+
+.profile-status-dot {
+  border-color: #fff;
+  background: #3d9d5d;
+}
+
+.welcome-setup-card {
+  max-width: 1040px;
+  margin: 1rem auto 2rem;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  background: var(--fg-surface);
+  border: 1px solid var(--fg-border);
+  border-radius: 24px;
+  box-shadow: var(--fg-shadow);
+}
+
+.setup-hero {
+  margin-bottom: 2.4rem;
+}
+
+.hero-badge {
+  background: #f2f8e8;
+  color: var(--fg-green-dark);
+  border: 1px solid #e4efcf;
+  font-size: 0.75rem;
+  letter-spacing: 0.035em;
+}
+
+.hero-main-title {
+  max-width: 780px;
+  margin: 0 auto 0.85rem;
+  color: var(--fg-ink);
+  font-size: clamp(2.1rem, 4.8vw, 3.45rem);
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+}
+
+.gradient-text {
+  background: linear-gradient(100deg, #287f4a 10%, #679d38 88%);
+  -webkit-background-clip: text;
+}
+
+.hero-desc {
+  max-width: 680px;
+  color: var(--fg-muted);
+  font-size: 1rem;
+}
+
+.badge {
+  font-size: 0.78rem;
+}
+
+.badge-checking {
+  background: #fff8e5;
+  color: #986b13;
+  border-color: #f3e2b3;
+}
+
+.badge-online {
+  background: #edf8ee;
+  color: #277640;
+  border-color: #d4ead7;
+}
+
+.badge-offline {
+  background: #fff0ee;
+  color: #ad4035;
+  border-color: #f3d0cb;
+}
+
+.generator-form {
+  gap: 1.35rem;
+}
+
+.form-label {
+  color: #3a4840;
+  font-size: 0.84rem;
+  letter-spacing: 0.025em;
+}
+
+.generator-textarea {
+  min-height: 150px;
+  padding: 1rem 1.1rem;
+  background: #fbfcfb;
+  border: 1px solid #dce5dd;
+  border-radius: 12px;
+  color: var(--fg-ink);
+  font-size: 0.96rem;
+}
+
+.generator-textarea::placeholder {
+  color: #9aa59d;
+}
+
+.generator-textarea:focus {
+  background: #fff;
+  border-color: #5b9a6c;
+  box-shadow: 0 0 0 4px rgba(72, 145, 89, 0.12);
+}
+
+.btn-primary-glow {
+  min-height: 48px;
+  padding: 0.8rem 1.45rem;
+  background: var(--fg-green);
+  border-radius: 10px;
+  box-shadow: 0 5px 14px rgba(40, 131, 76, 0.2);
+}
+
+.btn-primary-glow:hover:not(:disabled) {
+  background: var(--fg-green-dark);
+  box-shadow: 0 8px 18px rgba(40, 131, 76, 0.24);
+}
+
+.btn-secondary-dark {
+  min-height: 48px;
+  padding: 0.8rem 1.2rem;
+  background: #fff;
+  color: #3d4b42;
+  border-color: #dce5dd;
+}
+
+.btn-secondary-dark:hover:not(:disabled) {
+  background: #f5f8f5;
+  color: var(--fg-ink);
+}
+
+.btn-outline-dark {
+  color: #45534a;
+  border-color: #d9e3da;
+}
+
+.btn-outline-dark:hover {
+  background: #f1f6f1;
+  color: var(--fg-ink);
+}
+
+.generator-loading-card {
+  background: #f3f8ed;
+  border-color: #e1ebd5;
+}
+
+.loading-copy h4 {
+  color: var(--fg-green-dark);
+}
+
+.loading-copy p {
+  color: var(--fg-muted);
+}
+
+.error-card {
+  background: #fff1ef;
+  border-color: #f0d4cf;
+  color: #a84036;
+}
+
+.dashboard-layout {
+  gap: 1.5rem;
+}
+
+.personalized-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.35rem, 3vw, 2.2rem);
+  background: linear-gradient(115deg, #f2f8e9 0%, #fbfdf9 58%, #eff7f1 100%);
+  border: 1px solid #e0ead8;
+  border-radius: 22px;
+  box-shadow: var(--fg-shadow);
+}
+
+.personalized-hero::after {
+  position: absolute;
+  top: -5rem;
+  right: -4rem;
+  width: 15rem;
+  height: 15rem;
+  border: 1px solid rgba(68, 130, 72, 0.08);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.hero-greeting-row {
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  margin-bottom: 1.4rem;
+}
+
+.hero-subheading {
+  color: var(--fg-green-dark);
+  letter-spacing: 0.075em;
+}
+
+.hero-greeting {
+  color: var(--fg-ink);
+  font-size: clamp(1.7rem, 3vw, 2.15rem);
+  letter-spacing: -0.045em;
+}
+
+.hero-status-tagline {
+  color: #66736a;
+}
+
+.hero-status-tagline strong {
+  color: #34473a;
+}
+
+.profile-chips-grid {
+  position: relative;
+  z-index: 1;
+  gap: 0.65rem;
+}
+
+.profile-chip {
+  min-width: 0;
+  padding: 0.72rem 0.85rem;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid #e5ece3;
+  border-radius: 11px;
+}
+
+.chip-label {
+  color: #829087;
+}
+
+.chip-value {
+  color: #283a2e;
+}
+
+.chip-accent {
+  color: var(--fg-green-dark);
+}
+
+.dashboard-card,
+.weekly-schedule-section {
+  padding: clamp(1.15rem, 2.6vw, 1.7rem);
+  background: var(--fg-surface);
+  border: 1px solid var(--fg-border);
+  border-radius: 18px;
+  box-shadow: 0 6px 20px rgba(22, 44, 29, 0.045);
+}
+
+.card-top-bar {
+  border-color: #e8ede8;
+}
+
+.badge-highlight {
+  color: var(--fg-green);
+  letter-spacing: 0.07em;
+}
+
+.workout-main-title {
+  color: var(--fg-ink);
+  font-size: clamp(1.15rem, 2.4vw, 1.4rem);
+  letter-spacing: -0.025em;
+}
+
+.workout-meta-pills {
+  justify-content: flex-end;
+}
+
+.pill-metric {
+  background: #f4f7f4;
+  color: #526057;
+  border-color: #e5ebe5;
+}
+
+.pill-calorie {
+  background: #fff7e7;
+  color: #9b711a;
+  border-color: #f2e4c5;
+}
+
+.sub-heading {
+  color: #56645b;
+}
+
+.exercise-row-card {
+  padding: 0.95rem 1rem;
+  background: #fbfcfb;
+  border-color: #e8ede8;
+  border-radius: 12px;
+}
+
+.exercise-row-card:hover {
+  background: #f6faf5;
+  border-color: #d6e6d5;
+  transform: translateY(-1px);
+}
+
+.ex-number {
+  background: #edf6e9;
+  color: var(--fg-green-dark);
+}
+
+.ex-title {
+  color: #28372e;
+}
+
+.ex-cue {
+  color: #758178;
+}
+
+.stat-sets-reps {
+  background: #edf6e9;
+  color: #2b7544;
+}
+
+.stat-rest {
+  color: #7c8980;
+}
+
+.coaching-notes-box {
+  background: #f0f6fc;
+  border-left-color: #86aeda;
+  color: #50677e;
+}
+
+.coaching-notes-box strong {
+  color: #42678d;
+}
+
+.no-data-msg {
+  color: #79867d;
+}
+
+.weekly-schedule-section {
+  padding-top: 1.4rem;
+}
+
+.section-heading {
+  color: var(--fg-ink);
+  font-size: 1.28rem;
+  letter-spacing: -0.025em;
+}
+
+.section-caption {
+  color: var(--fg-muted);
+}
+
+.live-update-badge {
+  background: #edf8ee;
+  color: #277640;
+  border-color: #d4ead7;
+}
+
+.schedule-cards-grid {
+  gap: 0.65rem;
+  overflow: visible;
+  padding-bottom: 0;
+}
+
+.schedule-day-card {
+  min-width: 0;
+  padding: 0.8rem 0.7rem;
+  background: #fbfcfb;
+  border-color: #e5ebe5;
+  border-radius: 12px;
+}
+
+.schedule-day-card:hover {
+  background: #f6faf5;
+  border-color: #b9d3b9;
+  transform: translateY(-2px);
+}
+
+.schedule-day-card-active {
+  background: #f1f8e8;
+  border: 1px solid #79ad69;
+  box-shadow: inset 0 0 0 1px rgba(88, 142, 65, 0.1);
+}
+
+.day-tag {
+  color: #7e8b81;
+}
+
+.day-time-pill {
+  background: #eaf4e5;
+  color: #397448;
+}
+
+.day-title {
+  color: #26372b;
+  font-size: 1.05rem;
+  letter-spacing: 0.025em;
+}
+
+.day-workout-name {
+  color: #58675d;
+}
+
+.day-focus-pill {
+  color: #7e8a81;
+}
+
+.dashboard-content-grid {
+  grid-template-columns: minmax(0, 1.25fr) minmax(330px, 0.85fr);
+  gap: 1.35rem;
+}
+
+.left-content-column {
+  gap: 1.35rem;
+}
+
+.meals-grid {
+  gap: 0.75rem;
+}
+
+.meal-box {
+  background: #fbfcfb;
+  border-color: #e8ede8;
+  border-radius: 12px;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.meal-box:hover {
+  background: #f7faf6;
+  border-color: #dce8d9;
+  transform: translateY(-1px);
+}
+
+.meal-box-header h4 {
+  color: #397448;
+}
+
+.meal-text {
+  color: #526057;
+}
+
+.right-coach-column {
+  top: 86px;
+}
+
+.coach-panel-card {
+  background: #fff;
+  border: 1px solid #dfe8df;
+  border-radius: 18px;
+  box-shadow: var(--fg-shadow);
+}
+
+.coach-header {
+  border-color: #e8ede8;
+}
+
+.coach-avatar {
+  background: #eaf4dc;
+  color: #3f722e;
+  box-shadow: none;
+}
+
+.coach-name {
+  color: #26372b;
+}
+
+.coach-status {
+  color: #438154;
+}
+
+.pulse-dot {
+  background: #52a768;
+}
+
+.coach-badge {
+  background: #f2f6f1;
+  color: #607066;
+}
+
+.coach-tagline {
+  color: #6c7970;
+}
+
+.chat-messages-container {
+  min-height: 210px;
+  max-height: 340px;
+  height: 32vh;
+}
+
+.chat-messages-container::-webkit-scrollbar-thumb {
+  background: #d7e0d8;
+}
+
+.chat-avatar-mini {
+  background: #4e965f;
+}
+
+.user-avatar-mini {
+  background: #8199b5;
+}
+
+.bubble-assistant {
+  background: #f4f7f4;
+  border-color: #e6ece6;
+  color: #36443a;
+}
+
+.bubble-user {
+  background: #32824e;
+}
+
+.bubble-error {
+  background: #fff1ef;
+  border-color: #f0d4cf;
+  color: #a84036;
+}
+
+.typing-dots span {
+  background: #4e965f;
+}
+
+.typing-label {
+  color: #76837a;
+}
+
+.quick-label {
+  color: #718076;
+}
+
+.quick-chip {
+  background: #fff;
+  border-color: #e1e9e1;
+  color: #536157;
+  border-radius: 8px;
+  padding: 0.4rem 0.65rem;
+}
+
+.quick-chip:hover:not(:disabled) {
+  background: #f1f8e9;
+  border-color: #c9dfbd;
+  color: #2f7042;
+}
+
+.chat-text-input {
+  min-width: 0;
+  background: #fbfcfb;
+  border-color: #dfe7df;
+  color: #28372e;
+}
+
+.chat-text-input::placeholder {
+  color: #95a198;
+}
+
+.chat-text-input:focus {
+  border-color: #6a9e70;
+  box-shadow: 0 0 0 3px rgba(72, 145, 89, 0.12);
+}
+
+.chat-send-btn {
+  background: var(--fg-green);
+}
+
+.chat-send-btn:hover:not(:disabled) {
+  background: var(--fg-green-dark);
+}
+
+.chat-feedback-success {
+  background: #edf8ee;
+  color: #277640;
+  border-color: #d4ead7;
+}
+
+.chat-feedback-error {
+  background: #fff1ef;
+  color: #a84036;
+  border-color: #f0d4cf;
+}
+
+.disclaimer {
+  background: #fff9ed;
+  border-color: #f1e4c8;
+  color: #816b40;
+}
+
+.footer {
+  background: #fff;
+  border-top: 1px solid var(--fg-border);
+}
+
+.footer-container {
+  color: #647168;
+}
+
+.footer-sub {
+  color: #849087;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(75, 143, 83, 0.38);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1100px) {
+  .navbar {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .navbar-links {
+    gap: 0.1rem;
+  }
+
+  .nav-item {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .schedule-cards-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .dashboard-content-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 0.82fr);
+  }
+}
+
+@media (max-width: 850px) {
+  .navbar-container {
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .navbar-links {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0.2rem 0 0.1rem;
+  }
+
+  .navbar-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-item {
+    flex: 0 0 auto;
+  }
+
+  .main-content {
+    padding: 1.4rem 1.25rem 2.5rem;
+  }
+
+  .dashboard-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .right-coach-column {
+    position: static;
+  }
+
+  .chat-messages-container {
+    height: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-content {
+    padding: 1rem 0.85rem 2rem;
+  }
+
+  .navbar {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .navbar-container {
+    gap: 0.35rem 0.7rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.12rem;
+  }
+
+  .profile-indicator {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-item {
+    font-size: 0.77rem;
+    padding: 0.45rem 0.58rem;
+  }
+
+  .welcome-setup-card {
+    margin-top: 0.25rem;
+    padding: 1.45rem 1.05rem;
+    border-radius: 18px;
+  }
+
+  .setup-hero {
+    margin-bottom: 1.7rem;
+  }
+
+  .hero-main-title {
+    font-size: clamp(2rem, 9vw, 2.7rem);
+  }
+
+  .hero-desc {
+    font-size: 0.94rem;
+  }
+
+  .form-buttons-row {
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .form-buttons-row button {
+    width: 100%;
+  }
+
+  .personalized-hero {
+    padding: 1.25rem 1rem;
+    border-radius: 17px;
+  }
+
+  .hero-greeting-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .profile-chips-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-chip-metrics {
+    grid-column: span 2;
+  }
+
+  .dashboard-card,
+  .weekly-schedule-section {
+    padding: 1.05rem 0.9rem;
+    border-radius: 15px;
+  }
+
+  .section-header-row,
+  .card-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .workout-meta-pills {
+    justify-content: flex-start;
+  }
+
+  .schedule-cards-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .schedule-day-card {
+    padding: 0.62rem 0.5rem;
+  }
+
+  .day-card-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .day-tag {
+    font-size: 0.6rem;
+  }
+
+  .day-time-pill {
+    font-size: 0.65rem;
+  }
+
+  .day-title {
+    font-size: 0.94rem;
+  }
+
+  .day-workout-name,
+  .day-focus-pill {
+    font-size: 0.7rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .exercise-row-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .ex-stats {
+    align-items: flex-start;
+    padding-left: 2.1rem;
+  }
+
+  .meals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .coach-panel-card {
+    padding: 1.1rem 0.9rem;
+  }
+
+  .chat-messages-container {
+    height: 260px;
+  }
+
+  .chat-input-bar {
+    gap: 0.4rem;
+  }
+
+  .chat-text-input {
+    padding: 0.65rem 0.7rem;
+    font-size: 0.84rem;
+  }
+
+  .chat-send-btn {
+    padding: 0.6rem 0.75rem;
+  }
+
+  .footer {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

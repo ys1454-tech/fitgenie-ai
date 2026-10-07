@@ -3,9 +3,9 @@ from pathlib import Path
 
 import joblib
 
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import Pipeline
+
+from .transformer_encoder import encode_texts
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -30,31 +30,13 @@ def load_training_data():
 
 def train():
     texts, labels = load_training_data()
-
-    model = Pipeline(
-        [
-            (
-                "tfidf",
-                TfidfVectorizer(
-                    lowercase=True,
-                    ngram_range=(1, 2),
-                    sublinear_tf=True,
-                ),
-            ),
-            (
-                "classifier",
-                LogisticRegression(
-                    max_iter=1000
-                ),
-            ),
-        ]
-    )
-
-    model.fit(texts, labels)
+    embeddings = encode_texts(texts)
+    classifier = LogisticRegression(max_iter=1000)
+    classifier.fit(embeddings, labels)
 
     MODEL_DIR.mkdir(exist_ok=True)
 
-    joblib.dump(model, MODEL_FILE)
+    joblib.dump(classifier, MODEL_FILE)
 
     print(f"Intent model saved to: {MODEL_FILE}")
 

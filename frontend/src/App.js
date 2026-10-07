@@ -17,7 +17,7 @@ function App() {
         <header className="navbar">
           <div className="navbar-container">
             <Link to="/" className="navbar-brand">
-              <span className="brand-icon">⚡</span>
+              <span className="brand-icon">FG</span>
               <span className="brand-text">FitGenie <span className="brand-accent">AI</span></span>
             </Link>
 
@@ -26,12 +26,12 @@ function App() {
               <a href="#workout" className="nav-item">Today's Workout</a>
               <a href="#schedule" className="nav-item">Weekly Schedule</a>
               <a href="#nutrition" className="nav-item">Nutrition</a>
-              <a href="#ai-coach" className="nav-item nav-item-coach">💬 AI Coach</a>
+              <a href="#ai-coach" className="nav-item nav-item-coach">AI Coach</a>
             </nav>
 
             <div className="navbar-profile">
               <div className="profile-indicator">
-                <span className="profile-avatar">👤</span>
+                <span className="profile-avatar">FG</span>
                 <span className="profile-status-dot"></span>
               </div>
             </div>
@@ -49,7 +49,7 @@ function App() {
         <footer className="footer">
           <div className="footer-container">
             <p>
-              ⚡ <strong>FitGenie AI</strong> &copy; 2026 — Personalized Fitness &amp; Nutrition System Powered by Generative AI.
+              <strong>FitGenie AI</strong> &copy; 2026 — Personalized Fitness &amp; Nutrition System Powered by Generative AI.
             </p>
             <p className="footer-sub">
               Demonstration &amp; Educational Project &nbsp;|&nbsp; Built with Google Gemini &amp; FastAPI.

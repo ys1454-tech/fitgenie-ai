@@ -15,7 +15,7 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 # ── Database file path ─────────────────────────────────────────────────────
 # Place fitgenie.db in the backend/ folder next to main.py.
-# The path is relative to wherever uvicorn is launched from.
+# The path is relative to wherever uvicorn is launched from. 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASE_URL = f"sqlite:///{os.path.join(BASE_DIR, 'fitgenie.db')}"
 

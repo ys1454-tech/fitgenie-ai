@@ -609,6 +609,69 @@ function HomePage() {
             )}
           </section>
 
+          {/* ── NLP Analysis Section ─────────────────────────────────── */}
+          {result.nlp_analysis ? (
+            <section className="dashboard-card" style={{ marginBottom: "2rem" }}>
+              <div className="card-top-bar" style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.07)", paddingBottom: "1rem", marginBottom: "1.5rem" }}>
+                <div>
+                  <span className="badge-highlight">DIAGNOSTICS</span>
+                  <h2 className="workout-main-title">🧠 NLP Analysis</h2>
+                  <p style={{ color: "#94a3b8", fontSize: "0.9rem", marginTop: "0.25rem" }}>How FitGenie processed your natural language request.</p>
+                </div>
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
+                <div>
+                  <h3 className="sub-heading" style={{ color: "#94a3b8", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Detected Intent</h3>
+                  <div style={{ display: "inline-flex", alignItems: "center", background: "#1e293b", padding: "0.6rem 1rem", borderRadius: "8px", border: "1px solid rgba(255, 255, 255, 0.07)", marginBottom: "1.5rem" }}>
+                    <strong style={{ fontSize: "1.05rem", color: "#f8fafc" }}>{result.nlp_analysis.intent || "UNKNOWN"}</strong>
+                    <span style={{ marginLeft: "0.75rem", fontSize: "0.85rem", color: "#10b981", background: "rgba(16, 185, 129, 0.15)", padding: "0.2rem 0.6rem", borderRadius: "4px" }}>
+                      {((result.nlp_analysis.intent_confidence || 0) * 100).toFixed(1)}% Confidence
+                    </span>
+                  </div>
+                  
+                  <h3 className="sub-heading" style={{ color: "#94a3b8", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Extracted Keywords</h3>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                    {(result.nlp_analysis.keywords || []).map((kw, i) => (
+                      <span key={i} style={{ background: "rgba(255,255,255,0.05)", padding: "0.3rem 0.75rem", borderRadius: "6px", fontSize: "0.9rem", color: "#cbd5e1" }}>
+                        {kw}
+                      </span>
+                    ))}
+                    {(!result.nlp_analysis.keywords || result.nlp_analysis.keywords.length === 0) && (
+                      <span style={{ color: "#64748b", fontSize: "0.9rem" }}>No keywords extracted.</span>
+                    )}
+                  </div>
+                </div>
+                
+                <div>
+                  <h3 className="sub-heading" style={{ color: "#94a3b8", fontSize: "0.95rem", marginBottom: "0.75rem", textTransform: "uppercase", letterSpacing: "1px" }}>Detected Entities</h3>
+                  {result.nlp_analysis.entities && Object.keys(result.nlp_analysis.entities).length > 0 ? (
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: "0.75rem" }}>
+                      {Object.entries(result.nlp_analysis.entities).map(([key, vals]) => {
+                        const formattedKey = key.split('_').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ');
+                        return (
+                          <div key={key} style={{ background: "rgba(255, 255, 255, 0.03)", padding: "0.6rem 0.8rem", borderRadius: "8px", border: "1px solid rgba(255, 255, 255, 0.05)" }}>
+                            <div style={{ fontSize: "0.75rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "0.25rem" }}>
+                              {formattedKey}
+                            </div>
+                            <div style={{ fontSize: "0.95rem", color: "#f1f5f9", fontWeight: "500" }}>
+                              {Array.isArray(vals) ? vals.join(", ") : vals}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <span style={{ color: "#64748b", fontSize: "0.9rem" }}>No entities detected.</span>
+                  )}
+                </div>
+              </div>
+            </section>
+          ) : (
+            <div style={{ textAlign: "center", color: "#64748b", fontSize: "0.9rem", padding: "1rem", fontStyle: "italic" }}>
+              NLP analysis unavailable
+            </div>
+          )}
+
           {/* ── Weekly 7-Day Interactive Schedule ───────────────────── */}
           <section className="weekly-schedule-section" id="schedule">
             <div className="section-header-row">

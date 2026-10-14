@@ -1,0 +1,31 @@
+text,intent
+I want a fitness plan,FITNESS_PLAN
+Create a personalized fitness plan,FITNESS_PLAN
+I need a complete fitness routine,FITNESS_PLAN
+Help me get fit,FITNESS_PLAN
+Make me a personalized workout and diet plan,FITNESS_PLAN
+I want a workout plan,WORKOUT_PLAN
+Give me a workout routine,WORKOUT_PLAN
+Create a home workout,WORKOUT_PLAN
+I need exercises for the gym,WORKOUT_PLAN
+Give me a weekly workout schedule,WORKOUT_PLAN
+I want a diet plan,DIET_PLAN
+Give me a meal plan,DIET_PLAN
+Create a diet for me,DIET_PLAN
+What should I eat to lose weight,DIET_PLAN
+Give me a vegetarian diet plan,DIET_PLAN
+Change my workout,PLAN_MODIFICATION
+Modify my workout,PLAN_MODIFICATION
+Make Wednesday easier,PLAN_MODIFICATION
+Replace my squats,PLAN_MODIFICATION
+Reduce my workout duration,PLAN_MODIFICATION
+What should I eat before workout,NUTRITION_QUERY
+How much protein should I eat,NUTRITION_QUERY
+What is a good post workout meal,NUTRITION_QUERY
+What should I eat after exercise,NUTRITION_QUERY
+How much water should I drink,NUTRITION_QUERY
+How can I lose weight,GENERAL_FITNESS_QUERY
+How can I build muscle,GENERAL_FITNESS_QUERY
+How many days should I workout,GENERAL_FITNESS_QUERY
+Is home workout effective,GENERAL_FITNESS_QUERY
+How can I improve my fitness,GENERAL_FITNESS_QUERY

@@ -13,7 +13,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Disclaimer from "../components/Disclaimer";
-import { checkHealth, generatePlan, modifyPlan, askCoach } from "../services/api";
+import { checkHealth, generatePlan, modifyPlan, askCoach, substituteItem } from "../services/api";
 
 const SAMPLE_INPUT =
   "I am 21 years old, male, 175 cm tall, 70 kg. My goal is weight loss. I am a beginner. I can exercise for 45 minutes per day. I have dumbbells at home. I prefer Indian vegetarian food. My budget is 3000 rupees per month.";
@@ -199,6 +199,12 @@ function getGreeting() {
   return "Good evening";
 }
 
+function formatNutritionValue(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return "—";
+  return Number.isInteger(numeric) ? String(numeric) : numeric.toFixed(1);
+}
+
 function HomePage() {
   // Backend connectivity status
   const [backendStatus, setBackendStatus] = useState("checking"); // "checking" | "online" | "offline"
@@ -220,6 +226,9 @@ function HomePage() {
   const [chatLoading, setChatLoading] = useState(false);
   const [chatError, setChatError] = useState(null);
   const [chatSuccess, setChatSuccess] = useState(null);
+  const [substitutionLoading, setSubstitutionLoading] = useState(null);
+  const [substitutionError, setSubstitutionError] = useState(null);
+  const [substitutionNotice, setSubstitutionNotice] = useState(null);
 
   const chatEndRef = useRef(null);
 
@@ -336,7 +345,10 @@ function HomePage() {
         const updatedData = await modifyPlan(result.plan_id, trimmed, rt.currentDay);
 
         // Update the active plan in dashboard state immediately
-        setResult(updatedData);
+        setResult((currentResult) => ({
+          ...updatedData,
+          nlp_analysis: updatedData.nlp_analysis ?? currentResult?.nlp_analysis,
+        }));
 
         // Extract conversational response from backend modification_summary
         const summary =
@@ -438,9 +450,39 @@ function HomePage() {
     setSelectedDayIndex(0);
   };
 
+  const handleMealSubstitution = async (day, mealSlot) => {
+    if (!result?.plan_id || substitutionLoading) return;
+    const mealDescription = day.nutrition?.[mealSlot];
+    if (!mealDescription) return;
+
+    setSubstitutionLoading(`${day.day_number}-${mealSlot}`);
+    setSubstitutionError(null);
+    setSubstitutionNotice(null);
+    try {
+      const updatedData = await substituteItem(
+        result.plan_id,
+        day.day_number,
+        mealSlot,
+        mealDescription,
+        "Replace this full meal with a nutritionally comparable option that preserves my saved dietary constraints."
+      );
+      setResult((currentResult) => ({
+        ...updatedData,
+        nlp_analysis: updatedData.nlp_analysis ?? currentResult?.nlp_analysis,
+      }));
+      setSubstitutionNotice(`${mealSlot[0].toUpperCase()}${mealSlot.slice(1)} replaced; daily estimates recalculated.`);
+    } catch (err) {
+      const detail = err.response?.data?.detail || err.message || "Unable to replace this meal right now.";
+      setSubstitutionError(detail);
+    } finally {
+      setSubstitutionLoading(null);
+    }
+  };
+
   // Current active day for details view
   const daysList = result?.plan?.days || [];
   const currentDay = daysList[selectedDayIndex] || daysList[0] || null;
+  const dailyNutritionTotals = currentDay?.nutrition?.daily_nutrition_totals;
 
   return (
     <div className="dashboard-root">
@@ -801,11 +843,31 @@ function HomePage() {
                     )}
                   </div>
 
+                  {dailyNutritionTotals && (
+                    <div className="nutrition-totals" aria-label="Estimated daily nutrition totals">
+                      <div className="nutrition-totals-main">
+                        <span>Estimated total</span>
+                        <strong>{formatNutritionValue(dailyNutritionTotals.calories_kcal)} kcal</strong>
+                      </div>
+                      <div className="nutrition-macros">
+                        <span>Protein <strong>{formatNutritionValue(dailyNutritionTotals.protein_g)} g</strong></span>
+                        <span>Carbs <strong>{formatNutritionValue(dailyNutritionTotals.carbs_g)} g</strong></span>
+                        <span>Fat <strong>{formatNutritionValue(dailyNutritionTotals.fat_g)} g</strong></span>
+                      </div>
+                      <p>Approximate meal estimates; daily totals are summed from the listed meals.</p>
+                    </div>
+                  )}
+                  {substitutionNotice && <p className="nutrition-feedback" role="status">{substitutionNotice}</p>}
+                  {substitutionError && <p className="nutrition-feedback is-error" role="alert">{substitutionError}</p>}
+
                   <div className="meals-grid">
                     {currentDay.nutrition.breakfast && (
                       <div className="meal-box">
                         <div className="meal-box-header">
                           <h4>Breakfast</h4>
+                          <button type="button" className="meal-swap-button" onClick={() => handleMealSubstitution(currentDay, "breakfast")} disabled={Boolean(substitutionLoading)}>
+                            {substitutionLoading === `${currentDay.day_number}-breakfast` ? "Replacing…" : "Swap meal"}
+                          </button>
                         </div>
                         <p className="meal-text">{currentDay.nutrition.breakfast}</p>
                       </div>
@@ -815,6 +877,9 @@ function HomePage() {
                       <div className="meal-box">
                         <div className="meal-box-header">
                           <h4>Lunch</h4>
+                          <button type="button" className="meal-swap-button" onClick={() => handleMealSubstitution(currentDay, "lunch")} disabled={Boolean(substitutionLoading)}>
+                            {substitutionLoading === `${currentDay.day_number}-lunch` ? "Replacing…" : "Swap meal"}
+                          </button>
                         </div>
                         <p className="meal-text">{currentDay.nutrition.lunch}</p>
                       </div>
@@ -824,6 +889,9 @@ function HomePage() {
                       <div className="meal-box">
                         <div className="meal-box-header">
                           <h4>Dinner</h4>
+                          <button type="button" className="meal-swap-button" onClick={() => handleMealSubstitution(currentDay, "dinner")} disabled={Boolean(substitutionLoading)}>
+                            {substitutionLoading === `${currentDay.day_number}-dinner` ? "Replacing…" : "Swap meal"}
+                          </button>
                         </div>
                         <p className="meal-text">{currentDay.nutrition.dinner}</p>
                       </div>
@@ -833,6 +901,9 @@ function HomePage() {
                       <div className="meal-box">
                         <div className="meal-box-header">
                           <h4>Snack / Shake</h4>
+                          <button type="button" className="meal-swap-button" onClick={() => handleMealSubstitution(currentDay, "snack")} disabled={Boolean(substitutionLoading)}>
+                            {substitutionLoading === `${currentDay.day_number}-snack` ? "Replacing…" : "Swap meal"}
+                          </button>
                         </div>
                         <p className="meal-text">{currentDay.nutrition.snack}</p>
                       </div>

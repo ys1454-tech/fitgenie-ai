@@ -38,6 +38,9 @@ Generate a comprehensive, balanced 7-day workout and nutrition plan tailored spe
 5. If a budget is specified ({budget}), recommend affordable, accessible everyday ingredients.
 6. Provide specific, practical exercise names with sets and reps (or duration in seconds/minutes).
 7. Provide realistic, easy-to-prepare meal suggestions with brief portion/ingredient guidance.
+8. For each meal, estimate calories and macros from the stated portions. These are estimates, not verified nutrition facts.
+9. Include numeric estimates for every meal slot, including snack; use zero values when no snack is planned.
+10. Do not calculate daily totals; the backend derives them from the per-meal estimates.
 
 ### EXPECTED OUTPUT FORMAT
 Respond ONLY with a JSON object following this exact structure:
@@ -67,7 +70,13 @@ Respond ONLY with a JSON object following this exact structure:
         "lunch": "Meal description with main ingredients and portion size",
         "dinner": "Meal description with main ingredients and portion size",
         "snack": "Optional healthy snack recommendation",
-        "daily_calories_target": "Estimated daily calorie goal, e.g. ~2000 kcal"
+        "daily_calories_target": "Estimated daily calorie goal, e.g. ~2000 kcal",
+        "meal_nutrition": {{
+          "breakfast": {{"calories_kcal": 400, "protein_g": 20, "carbs_g": 50, "fat_g": 10}},
+          "lunch": {{"calories_kcal": 600, "protein_g": 35, "carbs_g": 70, "fat_g": 20}},
+          "dinner": {{"calories_kcal": 500, "protein_g": 30, "carbs_g": 45, "fat_g": 15}},
+          "snack": {{"calories_kcal": 0, "protein_g": 0, "carbs_g": 0, "fat_g": 0}}
+        }}
       }},
       "daily_notes": "Important hydration, sleep, warm-up, or recovery reminders for this day"
     }}

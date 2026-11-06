@@ -3,12 +3,13 @@ substitution.py — Prompt template for individual exercise or food item substit
 Allows users to swap a specific item while preserving workout/nutrition continuity.
 """
 
+
+import json
+
 SUBSTITUTION_SYSTEM_PROMPT = """You are FitGenie AI's substitution assistant.
 Your task is to provide a single, targeted replacement for a specific exercise or food item from the user's plan.
 
 Requirements:
-- For exercise substitutions: Target the same primary muscle group, match the user's fitness level, and use ONLY their available equipment.
-- For food substitutions: Provide an equivalent nutritional role (e.g. carb source, lean protein), strictly match dietary preferences, and respect all food restrictions.
 
 Output ONLY a valid JSON object matching the requested schema. No conversational filler or external text.
 """
@@ -23,6 +24,9 @@ SUBSTITUTION_USER_PROMPT = """### USER PROFILE & CONSTRAINTS
 ### SUBSTITUTION REQUEST
 - Item Type: {item_type} (exercise OR food)
 - Item to Replace: "{item_name}"
+- Meal Slot: {meal_slot}
+- Existing Meal Description: "{current_meal}"
+- Existing Meal Nutrition Estimate: {current_nutrition_json}
 - Reason / Context (if any): "{reason}"
 
 ### TASK
@@ -34,12 +38,8 @@ Return a JSON object with this exact structure:
   "item_type": "{item_type}",
   "original_item": "{item_name}",
   "replacement_name": "Name of the alternative exercise or meal item",
-  "details": {{
-    "sets": <number or null, for exercise>,
-    "reps_or_duration": "<string or null, e.g. '10-12 reps' or '45 seconds'>",
-    "rest_seconds": <number or null>,
-    "instructions_or_recipe": "Brief form coaching or simple preparation tips for this replacement"
-  }},
+    "meal_description": "Full replacement meal description with ingredients and portions",
+    "nutrition": {{"calories_kcal": 400, "protein_g": 20, "carbs_g": 50, "fat_g": 10}},
   "reason_for_choice": "Explanation of why this replacement fits the user's muscle group/nutritional need and constraints"
 }}
 """
@@ -50,6 +50,9 @@ def build_substitution_prompt(
     item_name: str,
     profile: dict,
     reason: str = "User requested substitution",
+    meal_slot: str = "Not specified",
+    current_meal: str = "Not specified",
+    current_nutrition: dict | None = None,
 ) -> dict:
     """
     Build the system and user prompts for substituting an exercise or food item.
@@ -71,6 +74,9 @@ def build_substitution_prompt(
         food_restrictions=profile.get("food_restrictions") or "None",
         item_type=item_type.strip().lower(),
         item_name=item_name.strip(),
+        meal_slot=meal_slot,
+        current_meal=current_meal,
+        current_nutrition_json=json.dumps(current_nutrition or {}, ensure_ascii=False),
         reason=reason.strip(),
     )
 

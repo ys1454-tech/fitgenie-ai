@@ -12,6 +12,7 @@ uvicorn[standard]>=0.31.0
 
 # Google GenAI SDK — used to call Google Gemini API
 google-genai>=1.0.0
+json-repair>=0.30.0
 
 # Environment variable loader
 python-dotenv>=1.0.1

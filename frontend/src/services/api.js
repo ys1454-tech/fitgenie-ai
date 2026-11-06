@@ -111,12 +111,18 @@ export const askCoach = async (payload) => {
 
 /**
  * Request a substitution for a specific exercise or food item.
- * @param {string} itemType      - "exercise" or "food"
- * @param {string} itemName      - The item to replace (e.g., "squats", "oats")
- * @param {object} userProfile
- * @param {string} sessionId
+ * @param {string} planId
+ * @param {number} dayNumber
+ * @param {string} mealSlot
+ * @param {string} itemName
+ * @param {string} reason
  */
-export const substituteItem = async (itemType, itemName, userProfile, sessionId) => {
-  // TODO: implement in Stage 7
-  throw new Error("substituteItem — not yet implemented (Stage 7)");
+export const substituteItem = async (planId, dayNumber, mealSlot, itemName, reason) => {
+  const response = await apiClient.post(`/api/plans/${planId}/substitute`, {
+    day_number: dayNumber,
+    meal_slot: mealSlot,
+    item_name: itemName,
+    reason,
+  });
+  return response.data;
 };

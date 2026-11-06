@@ -8,7 +8,7 @@ import json
 PLAN_MODIFICATION_SYSTEM_PROMPT = """You are FitGenie AI, an adaptive fitness and nutrition coach.
 Your task is to modify an existing 7-day fitness and meal plan based on a user's specific follow-up request, while maintaining overall program balance and respecting the user's permanent profile constraints.
 
-Always return the full updated 7-day plan in strict JSON format.
+Return only a compact JSON patch for the days and fields that need to change. The backend preserves all omitted days and fields.
 Do not include conversational preamble, explanations, or markdown fences outside the JSON.
 """
 
@@ -31,41 +31,27 @@ PLAN_MODIFICATION_USER_PROMPT = """### USER PROFILE & PERMANENT CONSTRAINTS
 
 ### TASK & INSTRUCTIONS
 1. Analyze the user's modification request (e.g. reduced time for a specific day, injury adaptation, meal change, schedule swap).
-2. Apply the requested changes to the relevant day(s) while leaving the rest of the plan cohesive and intact.
-3. In each modified day's 'daily_notes', explicitly mention what modification was applied and why.
-4. Maintain strict compliance with the user's permanent constraints (allergies, available equipment, etc.).
+2. Apply the requested changes to every relevant day. Include a separate day update for each affected day; do not omit a requested day.
+3. Return only changed fields. Never repeat unchanged workouts, meals, or days.
+4. In each modified day's 'daily_notes', mention the applied modification and why.
+5. Maintain strict compliance with the user's permanent constraints (allergies, available equipment, etc.).
+6. For every changed meal description, return new numeric estimates for that meal in 'nutrition.meal_nutrition'. Do not change estimates for untouched meals.
+7. Use the existing portion sizes when estimating; these values are estimates, not verified nutrition facts. Do not return daily totals; the backend calculates them.
 
 ### EXPECTED OUTPUT FORMAT
-Return a JSON object with this exact structure:
+Return a JSON object with this exact structure. Include only affected days and changed fields:
 {{
-  "plan_title": "Updated 7-Day Personalized Fitness & Nutrition Plan",
   "modification_summary": "Brief summary of what specific changes were applied in response to the user's request",
-  "days": [
+  "day_updates": [
     {{
       "day_number": 1,
-      "day_name": "Monday",
-      "workout": {{
-        "title": "Workout session title",
-        "duration_minutes": 30,
-        "focus_area": "Target muscle groups or focus",
-        "exercises": [
-          {{
-            "name": "Exercise name",
-            "sets": 3,
-            "reps_or_duration": "10-12 reps",
-            "rest_seconds": 60,
-            "instructions": "Form cues or coaching notes"
-          }}
-        ]
-      }},
       "nutrition": {{
-        "breakfast": "Meal description",
-        "lunch": "Meal description",
-        "dinner": "Meal description",
-        "snack": "Snack recommendation",
-        "daily_calories_target": "Estimated calories"
+        "lunch": "Changed meal description with portions",
+        "meal_nutrition": {{
+          "lunch": {{"calories_kcal": 600, "protein_g": 35, "carbs_g": 70, "fat_g": 20}}
+        }}
       }},
-      "daily_notes": "Notes including mention of any applied modifications"
+      "daily_notes": "Notes about this modification"
     }}
   ]
 }}

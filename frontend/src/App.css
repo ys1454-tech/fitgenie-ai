@@ -1792,6 +1792,83 @@ a:hover {
   color: #526057;
 }
 
+.nutrition-totals {
+  display: grid;
+  grid-template-columns: minmax(130px, auto) 1fr;
+  gap: 0.4rem 1rem;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  margin: 0.9rem 0;
+  border: 1px solid #dfe8df;
+  border-radius: 8px;
+  background: #f7faf6;
+}
+
+.nutrition-totals-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  color: #526057;
+  font-size: 0.78rem;
+}
+
+.nutrition-totals-main strong {
+  color: #284f32;
+  font-size: 1.15rem;
+}
+
+.nutrition-macros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  color: #526057;
+  font-size: 0.8rem;
+}
+
+.nutrition-totals p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #718076;
+  font-size: 0.72rem;
+}
+
+.nutrition-feedback {
+  margin: 0.5rem 0;
+  color: #397448;
+  font-size: 0.82rem;
+}
+
+.nutrition-feedback.is-error {
+  color: #a33b2f;
+}
+
+.meal-box-header {
+  justify-content: space-between;
+}
+
+.meal-swap-button {
+  flex: none;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid #cbd9cb;
+  border-radius: 6px;
+  background: #fff;
+  color: #397448;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.meal-swap-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+@media (max-width: 640px) {
+  .nutrition-totals {
+    grid-template-columns: 1fr;
+  }
+}
+
 .right-coach-column {
   top: 86px;
 }
